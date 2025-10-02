@@ -21,13 +21,28 @@ const IndexScreen = () => {
         ]);
     };
 
+    const handleSelectBerry = () => {
+        console.log("Berry selected");
+    };
+
+    const handleSelectRoute = () => {
+        console.log("Route selected");
+    };
+
+    const handleDelete = (idToDelete: string) => {
+        console.log(`Delete item: ${idToDelete}`);
+        setRouteBoxes((prev) => prev.filter(item => item.id !== idToDelete));
+    }
+
     return (
         <View>
             
             <FlatList
+                style={styles.list}
+                contentContainerStyle={styles.listContent}
                 data={routeBoxes}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => <RouteBoxComponent />}
+                renderItem={({ item }) => <RouteBoxComponent data={item} onDelete={() => handleDelete(item.id)} onSelectBerry={handleSelectBerry} onSelectRoute={handleSelectRoute}/>}
             />
 
             <TouchableOpacity activeOpacity={0.8} onPress={handleAddRouteBox}>
@@ -43,7 +58,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+    },
+    list: {
+        marginTop: 20,
+        width: "auto",
+        alignSelf: "center",
+    },
+    listContent: {
+        justifyContent: "center"
     },
     text: {
         fontSize: 16,
@@ -51,7 +74,10 @@ const styles = StyleSheet.create({
     },
     routeButton: {
         fontSize: 18,
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignSelf: 'center',
+        backgroundColor: 'lightgrey',
+        borderColor: "#25292e",
+        borderRadius: 10,
+        padding: 10
     }
 })

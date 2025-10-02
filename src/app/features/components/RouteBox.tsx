@@ -3,15 +3,18 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
-    box: RouteBox;
+    data: RouteBox;
     onSelectRoute: (route: string) => void;
     onSelectBerry: (berryId: string, berry: string|null) => void;
+    onDelete: () => void;
 };
 
-const RouteBoxComponent = ({box, onSelectRoute, onSelectBerry}: Props) => {
+const RouteBoxComponent = ({data, onSelectRoute, onSelectBerry, onDelete}: Props) => {
     return (
         <View style={styles.container}>
-            <View style={styles.icon} />
+            <View style={styles.icon}>
+                <Text style={styles.iconText}>{data.id}</Text>
+            </View>
 
             <View style={styles.grid}>
                 <View style={styles.cell}>
@@ -31,6 +34,10 @@ const RouteBoxComponent = ({box, onSelectRoute, onSelectBerry}: Props) => {
                     <Text style={styles.label}>Label4</Text>
                 </View>
             </View>
+
+            <View style={styles.binIcon}>
+                <Text onPress={onDelete}>Delete</Text>
+            </View>
         </View>
     );
 };
@@ -41,6 +48,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         alignItems: "flex-start",
+        justifyContent: "space-evenly",
         padding: 10,
         borderWidth: 2,
         borderRadius: 10,
@@ -54,6 +62,17 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: "#fc1",
         marginRight: 12
+    },
+    binIcon: {
+        width: 45,
+        height: "auto",
+        borderColor: "black",
+        backgroundColor: "red",
+        borderRadius: 10,
+        borderWidth: 1,
+    },
+    iconText: {
+        fontSize: 10,
     },
     grid: {
         flexDirection: "row",

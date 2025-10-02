@@ -5,7 +5,11 @@ import { store } from './features/pokedata/store/pokeStore';
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <Stack>
+      <Stack
+        screenOptions={{
+          headerShown: false
+        }}
+      >
         <Stack.Screen name="index" options={{ title: "Home"}} />
       </Stack>
     </Provider>
