@@ -17,6 +17,10 @@ export default function TabsLayout() {
             name="map"
             options={{ title: "Map"}}
         />
+        <Tabs.Screen
+            name="apiTesting"
+            options={{ title: "API Testing"}}
+        />
     </Tabs>
   )
 }
