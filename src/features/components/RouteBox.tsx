@@ -1,4 +1,4 @@
-import { RouteBox } from '@/src/app/constants/types';
+import { RouteBox } from '@/src/constants/types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
