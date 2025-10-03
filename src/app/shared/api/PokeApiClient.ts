@@ -34,4 +34,5 @@ class PokeApiClient {
     }
 }
 
-export default PokeApiClient;
+const PokeApi = new PokeApiClient();
+export default PokeApi;

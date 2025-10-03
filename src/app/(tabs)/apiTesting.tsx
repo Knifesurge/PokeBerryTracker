@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CodeBlock from "../features/components/CodeBlock";
-import PokeApiClient from "../shared/api/PokeApiClient";
-
-const PokeClient = new PokeApiClient();
+import PokeClient from "../shared/api/PokeApiClient";
 
 const ApiTestingScreen = () => {
     const [data, setData] = useState<string>("Loading...");
@@ -19,10 +17,11 @@ const ApiTestingScreen = () => {
             }
         };
         fetchData();
-    })
+    });
 
     return (
         <View style={styles.container}>
+            <Text style={styles.text}>API Testing Screen</Text>
             <CodeBlock data={data}/>
         </View>
     );
@@ -33,5 +32,10 @@ export default ApiTestingScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginBottom: 10,
     }
 });
