@@ -1,6 +1,6 @@
+import { store } from '@/src/features/pokedata/store/pokeStore';
 import { Stack } from "expo-router";
 import { Provider } from 'react-redux';
-import { store } from './features/pokedata/store/pokeStore';
 
 export default function RootLayout() {
   return (

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { RouteBox } from '../constants/types';
-import RouteBoxComponent from '../features/components/RouteBox';
+import { RouteBox } from '@/src/constants/types';
+import RouteBoxComponent from '@/src/features/components/RouteBox';
 
 const IndexScreen = () => {
     const [routeBoxes, setRouteBoxes] = useState<RouteBox[]>([]);

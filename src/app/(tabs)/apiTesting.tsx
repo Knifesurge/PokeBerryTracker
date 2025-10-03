@@ -1,14 +1,15 @@
+import CodeBlock from "@/src/features/components/CodeBlock";
+import PokeApi from "@/src/shared/api/PokeApiClient";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import CodeBlock from "../features/components/CodeBlock";
-import PokeClient from "../shared/api/PokeApiClient";
 
 const ApiTestingScreen = () => {
     const [data, setData] = useState<string>("Select an option above.");
 
     const handleAllBerries = () => {
         try {
-            const berries = PokeClient.getAllBerries();
+            const berries = PokeApi.getAllBerries();
+            console.log(JSON.stringify(berries, null, 2));
             setData(JSON.stringify(berries, null, 2));
         } catch (error) {
             console.error("Error fetching all berries:", error);
@@ -18,7 +19,7 @@ const ApiTestingScreen = () => {
 
     const handleAllRoutes = () => {
         try {
-            const routes = PokeClient.getAllRoutes();
+            const routes = PokeApi.getAllRoutes();
             setData(JSON.stringify(routes, null, 2));
         } catch (error) {
             console.error("Error fetching all routes:", error);
