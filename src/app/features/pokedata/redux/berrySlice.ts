@@ -1,12 +1,10 @@
-import PokeApiClient from '@/src/app/shared/api/PokeApiClient';
+import PokeApi from '@/src/app/shared/api/PokeApiClient';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-const api = new PokeApiClient();
 
 export const fetchBerry = createAsyncThunk(
     "berries/fetchBerry",
     async (nameOrId: string) => {
-        return await api.getBerry(nameOrId);
+        return await PokeApi.getBerry(nameOrId);
     }
 );
 
