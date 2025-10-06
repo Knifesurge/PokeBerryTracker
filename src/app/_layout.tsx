@@ -7,10 +7,11 @@ export default function RootLayout() {
     <Provider store={store}>
       <Stack
         screenOptions={{
-          headerShown: false
+          headerShown: false,
         }}
       >
-        <Stack.Screen name="index" options={{ title: "Home"}} />
+        <Stack.Screen name="(tabs)" options={{ headerShown: false}} />
+        <Stack.Screen name="(boxes)" options={{ headerShown: false}} />
       </Stack>
     </Provider>
   )

@@ -1,4 +1,4 @@
-import CodeBlock from "@/src/features/components/CodeBlock";
+import CodeBlock from "@/src/components/CodeBlock";
 import PokeApi from "@/src/shared/api/PokeApiClient";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
