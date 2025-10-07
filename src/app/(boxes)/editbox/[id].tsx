@@ -17,8 +17,8 @@ const EditBoxScreen = () => {
         <View style={styles.container}>
             <Text style={styles.text}>Editing...</Text>
             <Text style={styles.text}>Box ID: {id}</Text>
-            <Text style={styles.text}>Route Name: {box?.routeName}</Text>
-            <Text style={styles.text}>Berries: {box?.berries.map(b => b.name).join(', ')}</Text>
+            <Text style={styles.text}>Route Name: {box!.routeName}</Text>
+            <Text style={styles.text}>Berries: {box!.berries.map(b => b.name).join(', ')}</Text>
         </View>
     );
 }

@@ -1,27 +1,34 @@
 import React from 'react';
 
 import { FlatList, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBerry, removeBox } from '../store/boxesSlice';
 
 import { RootState } from '../store/pokeStore';
-import RouteBox from './BoxComponent';
+import BoxComponent from './BoxComponent';
 
 const BoxFeed = () => {
-    const routeBoxes = useSelector((state: RootState) => state.boxes.items);
+    const boxes = useSelector((state: RootState) => state.boxes.items);
+    const dispatch = useDispatch();
+
+    const handleEditBerry = (boxId: string, newBerry: string) => {
+        dispatch(addBerry(boxId, newBerry))
+    };
+
+    const handleRemoveBox = (boxId: string) => {
+        dispatch(removeBox(boxId));
+    }
 
     return (
-        <SafeAreaView style={styles.safeArea}>
             <View>
                 <FlatList
                     style={styles.list}
                     contentContainerStyle={styles.listContent}
-                    data={routeBoxes}
+                    data={boxes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <RouteBox data={item} />}
+                    renderItem={({ item }) => <BoxComponent data={item} onRemove={() => handleRemoveBox(item.id)} onEdit={(newBerry: string) => handleEditBerry(item.id, newBerry)}/>}
                 />
             </View>
-        </SafeAreaView>
     );
 };
 
@@ -33,9 +40,11 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     list: {
-        flex: 1,
+        marginTop: 20,
+        width: "auto",
+        alignSelf: "center"
     },
     listContent: {
-        paddingBottom: 20,
+        justifyContent: "center"
     },
 });
