@@ -39,11 +39,14 @@ const CreateBoxScreen = () => {
                     onSelect={handleRouteSelection}
                     label={selectedRoute ? `Route: ${selectedRoute}` : "Select Route"}
                 />
-                <SearchableSelector
-                    options={berriesList}
-                    onSelect={handleBerrySelection}
-                    label={selectedBerry ? `Berry: ${selectedBerry}` : "Select Berry"}
-                />
+                {Array.from({ length: 4 }).map((_, index) => (
+                    <SearchableSelector
+                        key={index}
+                        options={berriesList}
+                        onSelect={handleBerrySelection}
+                        label={selectedBerry ? `Berry: ${selectedBerry}` : "Select Berry"}
+                    />
+                ))}
                 <TouchableOpacity activeOpacity={0.8} onPress={handleBoxSubmit}>
                     <Text style={styles.routeButton}>Create Box</Text>
                 </TouchableOpacity>

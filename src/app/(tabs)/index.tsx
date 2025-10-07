@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import BoxComponent from '@/src/features/boxes/components/BoxComponent';
 import { Box, BoxesState } from '@/src/features/boxes/store/types';
 
-import { removeBox } from '@/src/features/boxes/store/boxesSlice';
+import { addBerry, removeBox } from '@/src/features/boxes/store/boxesSlice';
 import mockData from '@/src/mockdata/MockData.json';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,6 +18,10 @@ const IndexScreen = () => {
     const boxes: Box[] = useSelector(
         (state: { boxes: BoxesState }) => state.boxes.items
     );
+
+    const handleEditBerry = (boxId: string, newBerry: string) => {
+        dispatch(addBerry(boxId, newBerry))
+    };
 
     const handleAddBox = () => {
         router.push('/(boxes)/createbox');
@@ -43,7 +47,7 @@ const IndexScreen = () => {
                     contentContainerStyle={styles.listContent}
                     data={boxes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <BoxComponent data={item} onRemove={() => handleRemoveBox(item.id)} onSelectBerry={handleSelectBerry} onSelectRoute={handleSelectRoute}/>}
+                    renderItem={({ item }) => <BoxComponent data={item} onEdit={(newBerry:string)=>handleEditBerry(item.id, newBerry)} onRemove={() => handleRemoveBox(item.id)} onSelectBerry={handleSelectBerry} onSelectRoute={handleSelectRoute}/>}
                 />
 
                 <TouchableOpacity activeOpacity={0.8} onPress={handleAddBox}>

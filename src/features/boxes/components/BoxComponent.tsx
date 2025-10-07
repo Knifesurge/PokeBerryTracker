@@ -1,13 +1,21 @@
 import { Box } from '@/src/features/boxes/store/types';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
     data: Box;
     onRemove: () => void;
+    onEdit: (newBerry: string) => void;
 };
 
-const BoxComponent = ({data, onRemove}: Props) => {
+const BoxComponent = ({data, onRemove, onEdit}: Props) => {
+    const router = useRouter();
+
+    const handleEditBox = () => {
+        router.push(`/(boxes)/editbox/${data.id}`);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.icon}>
@@ -15,27 +23,14 @@ const BoxComponent = ({data, onRemove}: Props) => {
             </View>
 
             <View style={styles.grid}>
-                <View style={styles.cell}>
+                {data.berries.map((berry, index) => (
+                    <TouchableOpacity key={berry.id}onPress={handleEditBox}>
                     <View style={styles.smsquare} />
                     <Text style={styles.label}>
-                        {data.berries ? data.berries[0].name : "No Berry"}
+                        {data.berries ? data.berries[index].name : "No Berry"}
                     </Text>
-                </View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 1 ? data.berries[1].name : "No Berry"}
-                    </Text></View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 2 ? data.berries[2].name : "No Berry"}
-                    </Text></View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 3 ? data.berries[3].name : "No Berry"}
-                    </Text></View>
+                </TouchableOpacity>
+                ))}
             </View>
 
             <View style={styles.binIcon}>
