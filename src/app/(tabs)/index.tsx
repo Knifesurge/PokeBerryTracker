@@ -1,25 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import RouteBoxComponent from '@/src/components/RouteBox';
-import { RouteBox } from '@/src/constants/types';
-import SearchableSelector from '@/src/features/routeselector/SearchableSelector';
+import BoxComponent from '@/src/features/boxes/components/BoxComponent';
+import { Box, BoxesState } from '@/src/features/boxes/store/types';
 
+import { removeBox } from '@/src/features/boxes/store/boxesSlice';
 import mockData from '@/src/mockdata/MockData.json';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 const routes = mockData[0].routes;
 const berries = mockData[1].berries;
 
 const IndexScreen = () => {
     const router = useRouter();
-    const [routeBoxes, setRouteBoxes] = useState<RouteBox[]>([]);
+    const dispatch = useDispatch();
+    const boxes: Box[] = useSelector(
+        (state: { boxes: BoxesState }) => state.boxes.items
+    );
 
     const handleAddBox = () => {
         router.push('/(boxes)/createbox');
     };
-
-    
 
     const handleSelectBerry = () => {
         console.log("Berry selected");
@@ -29,30 +31,19 @@ const IndexScreen = () => {
         console.log("Route selected");
     };
 
-    const handleDelete = (idToDelete: string) => {
-        console.log(`Delete item: ${idToDelete}`);
-        setRouteBoxes((prev) => prev.filter(item => item.id !== idToDelete));
+    const handleRemoveBox = (boxId: string) => {
+        dispatch(removeBox(boxId));
     }
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <View>
-                <SearchableSelector
-                    options={routes!}
-                    onSelect={(val) => console.log(`Selected: ${val}`)}
-                    label="Select Route"
-                />
-                <SearchableSelector
-                    options={berries!}
-                    onSelect={(val) => console.log(`Selected: ${val}`)}
-                    label="Select Berry"
-                />
                 <FlatList
                     style={styles.list}
                     contentContainerStyle={styles.listContent}
-                    data={routeBoxes}
+                    data={boxes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <RouteBoxComponent data={item} onDelete={() => handleDelete(item.id)} onSelectBerry={handleSelectBerry} onSelectRoute={handleSelectRoute}/>}
+                    renderItem={({ item }) => <BoxComponent data={item} onRemove={() => handleRemoveBox(item.id)} onSelectBerry={handleSelectBerry} onSelectRoute={handleSelectRoute}/>}
                 />
 
                 <TouchableOpacity activeOpacity={0.8} onPress={handleAddBox}>

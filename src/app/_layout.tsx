@@ -1,4 +1,4 @@
-import { store } from '@/src/features/pokedata/store/pokeStore';
+import { store } from '@/src/features/boxes/store/pokeStore';
 import { Stack } from "expo-router";
 import { Provider } from 'react-redux';
 

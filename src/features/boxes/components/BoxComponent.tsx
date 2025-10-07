@@ -1,48 +1,51 @@
-import { RouteBox } from '@/src/constants/types';
+import { Box } from '@/src/features/boxes/store/types';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
-    data: RouteBox;
-    onSelectRoute: (route: string) => void;
-    onSelectBerry: (berryId: string, berry: string|null) => void;
-    onDelete: () => void;
+    data: Box;
+    onRemove: () => void;
 };
 
-const RouteBoxComponent = ({data, onSelectRoute, onSelectBerry, onDelete}: Props) => {
+const BoxComponent = ({data, onRemove}: Props) => {
     return (
         <View style={styles.container}>
             <View style={styles.icon}>
-                <Text style={styles.iconText}>{data.id}</Text>
+                <Text style={styles.iconText}>{data.routeName}</Text>
             </View>
 
             <View style={styles.grid}>
                 <View style={styles.cell}>
                     <View style={styles.smsquare} />
-                    <Text style={styles.label}>Label1</Text>
+                    <Text style={styles.label}>
+                        {data.berries ? data.berries[0].name : "No Berry"}
+                    </Text>
                 </View>
                 <View style={styles.cell}>
                     <View style={styles.smsquare} />
-                    <Text style={styles.label}>Label2</Text>
-                </View>
+                    <Text style={styles.label}>
+                        {data.berries.length > 1 ? data.berries[1].name : "No Berry"}
+                    </Text></View>
                 <View style={styles.cell}>
                     <View style={styles.smsquare} />
-                    <Text style={styles.label}>Label3</Text>
-                </View>
+                    <Text style={styles.label}>
+                        {data.berries.length > 2 ? data.berries[2].name : "No Berry"}
+                    </Text></View>
                 <View style={styles.cell}>
                     <View style={styles.smsquare} />
-                    <Text style={styles.label}>Label4</Text>
-                </View>
+                    <Text style={styles.label}>
+                        {data.berries.length > 3 ? data.berries[3].name : "No Berry"}
+                    </Text></View>
             </View>
 
             <View style={styles.binIcon}>
-                <Text onPress={onDelete}>Delete</Text>
+                <Text onPress={onRemove}>Delete</Text>
             </View>
         </View>
     );
 };
 
-export default RouteBoxComponent;
+export default BoxComponent;
 
 const styles = StyleSheet.create({
     container: {
