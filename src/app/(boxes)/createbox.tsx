@@ -11,23 +11,25 @@ const CreateBoxScreen = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const [selectedRoute, setSelectedRoute] = useState<string>("");
-    const [selectedBerry, setSelectedBerry] = useState<string>("");
+    const [berrySelections, setBerrySelections] = useState<string[]>(["","","",""]);
 
     const handleRouteSelection = (value: string) => {
         console.log(`Selected: ${value}`);
         setSelectedRoute(value);
     };
 
-    const handleBerrySelection = (value: string) => {
-        console.log(`Selected: ${value}`);
-        setSelectedBerry(value);
+    const handleBerrySelection = (value: string, index: number) => {
+        console.log(`Selected: ${value} in Box ${index}`);
+        const newList = [...berrySelections];
+        newList[index] = value;
+        setBerrySelections(newList);
     };
 
     const handleBoxSubmit = () => {
-        console.log(`Box created: {${selectedRoute}, ${selectedBerry}}`);
-        dispatch(addBox(selectedRoute, selectedBerry));
+        console.log(`Box created: {${selectedRoute}, ${berrySelections}}`);
+        dispatch(addBox(selectedRoute, berrySelections));
         setSelectedRoute("");
-        setSelectedBerry("");
+        setBerrySelections(["","","",""]);
         router.back();
     };
 
@@ -43,8 +45,8 @@ const CreateBoxScreen = () => {
                     <SearchableSelector
                         key={index}
                         options={berriesList}
-                        onSelect={handleBerrySelection}
-                        label={selectedBerry ? `Berry: ${selectedBerry}` : "Select Berry"}
+                        onSelect={(val)=>handleBerrySelection(val, index)}
+                        label={selectedBerry ? `Berry` : "Select Berry"}
                     />
                 ))}
                 <TouchableOpacity activeOpacity={0.8} onPress={handleBoxSubmit}>
