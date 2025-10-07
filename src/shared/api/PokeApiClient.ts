@@ -1,4 +1,4 @@
-import { Berry, LocationArea } from '@/src/app/constants/types';
+import { Berry, LocationArea } from '@/src/constants/types';
 
 class PokeApiClient {
     private baseUrl = "https://pokeapi.co/api/v2";
@@ -34,4 +34,5 @@ class PokeApiClient {
     }
 }
 
-export default PokeApiClient;
+const PokeApi = new PokeApiClient();
+export default PokeApi;

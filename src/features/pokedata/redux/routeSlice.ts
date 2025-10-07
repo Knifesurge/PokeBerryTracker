@@ -1,12 +1,11 @@
-import PokeApiClient from '@/src/app/shared/api/PokeApiClient';
+import PokeApi from '@/src/shared/api/PokeApiClient';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const api = new PokeApiClient();
 
 export const fetchRoute = createAsyncThunk(
     "routes/fetchRoute",
     async (nameOrId: string) => {
-        return await api.getRoute(nameOrId);
+        return await PokeApi.getRoute(nameOrId);
     },
 );
 
