@@ -1,3 +1,4 @@
+import BoxForm from '@/src/features/boxes/components/BoxForm';
 import { Box, BoxesState } from '@/src/features/boxes/store/types';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
@@ -18,10 +19,13 @@ const EditBoxScreen = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Editing...</Text>
-            <Text style={styles.text}>Box ID: {id}</Text>
-            <Text style={styles.text}>Route Name: {box!.routeName}</Text>
-            <Text style={styles.text}>Berries: {box!.berries.map(b => b.name).join(', ')}</Text>
+            <Text>Berries: {box!.berries.map(b=>b.name || "")}</Text>
+            <BoxForm 
+                initialRoute={box!.routeName}
+                initialBerries={box!.berries.map(b => b.name)}
+                onSubmit={(data) => console.log(data)}
+                submitLabel="Update"
+            />
         </SafeAreaView>
     );
 }

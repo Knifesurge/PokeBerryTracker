@@ -1,57 +1,25 @@
+import BoxForm from '@/src/features/boxes/components/BoxForm';
 import { addBox } from '@/src/features/boxes/store/boxesSlice';
-import { berriesList, routesList } from '@/src/features/boxes/store/initialData';
-import SearchableSelector from '@/src/features/routeselector/SearchableSelector';
-import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
 const CreateBoxScreen = () => {
-    const router = useRouter();
     const dispatch = useDispatch();
-    const [selectedRoute, setSelectedRoute] = useState<string>("");
-    const [berrySelections, setBerrySelections] = useState<string[]>(["","","",""]);
 
-    const handleRouteSelection = (value: string) => {
-        console.log(`Selected: ${value}`);
-        setSelectedRoute(value);
-    };
-
-    const handleBerrySelection = (value: string, index: number) => {
-        console.log(`Selected: ${value} in Box ${index}`);
-        const newList = [...berrySelections];
-        newList[index] = value;
-        setBerrySelections(newList);
-    };
-
-    const handleBoxSubmit = () => {
-        console.log(`Box created: {${selectedRoute}, ${berrySelections}}`);
-        dispatch(addBox(selectedRoute, berrySelections));
-        setSelectedRoute("");
-        setBerrySelections(["","","",""]);
-        router.back();
+    const handleBoxSubmit = (data: { route: string; berries: string[] }) => {
+        console.log(`Submit data: ${JSON.stringify(data)}`);
+        dispatch(addBox(data.route, data.berries));
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <SearchableSelector
-                    options={routesList}
-                    onSelect={handleRouteSelection}
-                    label={selectedRoute ? `Route: ${selectedRoute}` : "Select Route"}
+                <BoxForm 
+                    onSubmit={(data) => handleBoxSubmit(data)}
+                    submitLabel="Create"
                 />
-                {Array.from({ length: 4 }).map((_, index) => (
-                    <SearchableSelector
-                        key={index}
-                        options={berriesList}
-                        onSelect={(val)=>handleBerrySelection(val, index)}
-                        label={selectedBerry ? `Berry` : "Select Berry"}
-                    />
-                ))}
-                <TouchableOpacity activeOpacity={0.8} onPress={handleBoxSubmit}>
-                    <Text style={styles.routeButton}>Create Box</Text>
-                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
