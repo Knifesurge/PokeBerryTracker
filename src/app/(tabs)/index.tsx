@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 
@@ -11,9 +11,14 @@ const berries = mockData[1].berries;
 
 const IndexScreen = () => {
     const router = useRouter();
+    const [isNavigating, setisNavigating] = useState(false);
 
      const handleAddBox = () => {
+        if (isNavigating) return; // Prevent multiple navigations
+        setisNavigating(true);
         router.push('/(boxes)/createbox');
+
+        setTimeout(() => setisNavigating(false), 500); // Reset after a short delay
     };
 
     return (

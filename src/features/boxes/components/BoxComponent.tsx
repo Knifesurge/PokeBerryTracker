@@ -24,8 +24,8 @@ const BoxComponent = ({data, onRemove, onEdit}: Props) => {
 
             <View style={styles.grid}>
                 {data.berries.map((berry, index) => (
-                    <TouchableOpacity key={berry.id}onPress={handleEditBox}>
-                    <View style={styles.smsquare} />
+                    <TouchableOpacity style={styles.cell} key={berry.id}onPress={handleEditBox}>
+                    <View style={styles.berryIcon} />
                     <Text style={styles.label}>
                         {data.berries ? data.berries[index].name : "No Berry"}
                     </Text>
@@ -62,15 +62,17 @@ const styles = StyleSheet.create({
         marginRight: 12
     },
     binIcon: {
-        width: 45,
+        width: 48,
         height: "auto",
         borderColor: "black",
         backgroundColor: "red",
         borderRadius: 10,
         borderWidth: 1,
+        alignItems: "center",
     },
     iconText: {
-        fontSize: 10,
+        fontSize: 18,
+        fontFamily: "Roboto"
     },
     grid: {
         flexDirection: "row",
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
         width: "50%",
         marginBottom: 8
     },
-    smsquare: {
+    berryIcon: {
         width: 20,
         height: 20,
         backgroundColor: "#bbb",
