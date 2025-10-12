@@ -21,6 +21,10 @@ const SearchableSelector = ({ options, onSelect, label}: Props) => {
     const [query, setQuery] = useState("");
     const [selected, setSelected] = useState(label || "");
 
+
+    console.log(`Label: ${label}`)
+
+
     const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
 
     const toggleVisible = () => setVisible(!visible);

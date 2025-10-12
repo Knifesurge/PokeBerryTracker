@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addBerry, removeBox } from '../store/boxesSlice';
+import { removeBox, updateBox } from '../store/boxesSlice';
 
 import { RootState } from '../store/pokeStore';
 import BoxComponent from './BoxComponent';
@@ -12,7 +12,7 @@ const BoxFeed = () => {
     const dispatch = useDispatch();
 
     const handleEditBerry = (boxId: string, newBerry: string) => {
-        dispatch(addBerry(boxId, newBerry))
+        dispatch(updateBox(boxId, newBerry))
     };
 
     const handleRemoveBox = (boxId: string) => {

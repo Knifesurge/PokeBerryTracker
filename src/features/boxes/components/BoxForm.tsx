@@ -21,7 +21,7 @@ const BoxForm = ({
     const router = useRouter();
     const dispatch = useDispatch();
     const [selectedRoute, setSelectedRoute] = useState<string>(initialRoute || "");
-    const [berrySelections, setBerrySelections] = useState<string[]>([...Array(4).map((_, i) => initialBerries[i] || "")]);
+    const [berrySelections, setBerrySelections] = useState<string[]>(initialBerries.length ? initialBerries.slice(0,4) : ["","","",""]);
     
     const handleRouteSelection = (value: string) => {
         console.log(`Selected: ${value}`);
@@ -56,10 +56,10 @@ const BoxForm = ({
             />
             {berrySelections.map((berry, index) => (
                 <SearchableSelector
-                    key={index}
+                    key={`berry-select-${index}`}
                     options={berriesList}
                     onSelect={(val)=>handleBerrySelection(val, index)}
-                    label={berrySelections[index] ? `Berry: ${berrySelections[index]}` : "Select Berry"}
+                    label={berry ? `Berry: ${berry}` : "Select Berry"}
                 />
             ))}
 
