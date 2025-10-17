@@ -2,22 +2,19 @@ import React from 'react';
 
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeBox, updateBox } from '../store/boxesSlice';
 
+import { useRouter } from 'expo-router';
 import { RootState } from '../store/pokeStore';
 import BoxComponent from './BoxComponent';
 
 const BoxFeed = () => {
-    const boxes = useSelector((state: RootState) => state.boxes.items);
     const dispatch = useDispatch();
+    const router = useRouter();
+    const boxes = useSelector((state: RootState) => state.boxes.items);
 
-    const handleEditBerry = (boxId: string, newBerry: string) => {
-        dispatch(updateBox(boxId, newBerry))
+    const handleEdit = (boxId: string) => {
+        router.push(`/(boxes)/editbox/${boxId}`);
     };
-
-    const handleRemoveBox = (boxId: string) => {
-        dispatch(removeBox(boxId));
-    }
 
     return (
             <View>
@@ -26,7 +23,7 @@ const BoxFeed = () => {
                     contentContainerStyle={styles.listContent}
                     data={boxes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <BoxComponent data={item} onRemove={() => handleRemoveBox(item.id)} onEdit={(newBerry: string) => handleEditBerry(item.id, newBerry)}/>}
+                    renderItem={({ item }) => <BoxComponent data={item} onEdit={() => handleEdit(item.id)}/>}
                 />
             </View>
     );

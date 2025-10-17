@@ -28,13 +28,16 @@ const boxesSlice = createSlice({
         removeBox: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter(box => box.id !== action.payload);
         },
-        updateBox: (state, action: PayloadAction<{ id:String; berries: string[] }>) => {
-            const { id, berries } = action.payload;
+        updateBox: (state, action: PayloadAction<{ id:string; routeName?:string, berries: string[] }>) => {
+            const { id, routeName, berries } = action.payload;
             const box = state.items.find(box => box.id === id);
-            if (box) box.berries = berries.map((berry) => ({
-                id: nanoid(),
-                name: berry,
-            }) as Berry);
+            if (box) {
+                box.berries = berries.map((berry) => ({
+                    id: nanoid(),
+                    name: berry,
+                }) as Berry);
+                box.routeName = routeName ?? box.routeName;
+            }
         },
     },
 });

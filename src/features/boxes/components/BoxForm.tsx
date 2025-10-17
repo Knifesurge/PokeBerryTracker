@@ -1,7 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useDispatch } from 'react-redux';
 import SearchableSelector from '../../routeselector/SearchableSelector';
 import { berriesList, routesList } from '../store/initialData';
 
@@ -19,7 +18,6 @@ const BoxForm = ({
     submitLabel = "Save"
 }: Props) => {
     const router = useRouter();
-    const dispatch = useDispatch();
     const [selectedRoute, setSelectedRoute] = useState<string>(initialRoute || "");
     const [berrySelections, setBerrySelections] = useState<string[]>(initialBerries.length ? initialBerries.slice(0,4) : ["","","",""]);
     
@@ -37,14 +35,6 @@ const BoxForm = ({
 
     const handleBoxSubmit = () => {
         onSubmit({ route: selectedRoute, berries: berrySelections });
-        router.back();
-        /*
-        console.log(`Box created: {${selectedRoute}, ${berrySelections}}`);
-        dispatch(addBox(selectedRoute, berrySelections));
-        setSelectedRoute("");
-        setBerrySelections(["","","",""]);
-        router.back();
-        */
     };
 
     return (

@@ -5,16 +5,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
     data: Box;
-    onRemove: () => void;
-    onEdit: (newBerry: string) => void;
+    onEdit: (newBerries: string[]) => void;
 };
 
-const BoxComponent = ({data, onRemove, onEdit}: Props) => {
+const BoxComponent = ({data, onEdit}: Props) => {
     const router = useRouter();
 
     const handleEditBox = () => {
         router.push(`/(boxes)/editbox/${data.id}`);
     };
+
+    const handleDelete = () => {
+        // Implement delete functionality here
+        
+    }
 
     return (
         <View style={styles.container}>
@@ -34,7 +38,7 @@ const BoxComponent = ({data, onRemove, onEdit}: Props) => {
             </View>
 
             <View style={styles.binIcon}>
-                <Text onPress={onRemove}>Delete</Text>
+                <Text onPress={handleDelete}>Delete</Text>
             </View>
         </View>
     );

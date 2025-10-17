@@ -1,16 +1,19 @@
 import BoxForm from '@/src/features/boxes/components/BoxForm';
 import { addBox } from '@/src/features/boxes/store/boxesSlice';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
 const CreateBoxScreen = () => {
+    const router = useRouter();
     const dispatch = useDispatch();
 
     const handleBoxSubmit = (data: { route: string; berries: string[] }) => {
         console.log(`Submit data: ${JSON.stringify(data)}`);
         dispatch(addBox(data.route, data.berries));
+        router.back();
     };
 
     return (
