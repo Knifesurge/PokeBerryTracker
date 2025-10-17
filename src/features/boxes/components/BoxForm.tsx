@@ -59,7 +59,7 @@ const BoxForm = ({
                     key={`berry-select-${index}`}
                     options={berriesList}
                     onSelect={(val)=>handleBerrySelection(val, index)}
-                    label={berry ? `Berry: ${berry}` : "Select Berry"}
+                    label={berry ? `${berry}` : "Select Berry"}
                 />
             ))}
 
