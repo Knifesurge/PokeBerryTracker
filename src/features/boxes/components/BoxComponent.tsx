@@ -1,13 +1,27 @@
 import { Box } from '@/src/features/boxes/store/types';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { removeBox } from '../store/boxesSlice';
 
 type Props = {
     data: Box;
-    onRemove: () => void;
+    onEdit: (newBerries: string[]) => void;
 };
 
-const BoxComponent = ({data, onRemove}: Props) => {
+const BoxComponent = ({data, onEdit}: Props) => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const handleEditBox = () => {
+        router.push(`/(boxes)/editbox/${data.id}`);
+    };
+
+    const handleDelete = () => {
+        dispatch(removeBox(data.id));
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.icon}>
@@ -15,31 +29,18 @@ const BoxComponent = ({data, onRemove}: Props) => {
             </View>
 
             <View style={styles.grid}>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries ? data.berries[0].name : "No Berry"}
-                    </Text>
-                </View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 1 ? data.berries[1].name : "No Berry"}
-                    </Text></View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 2 ? data.berries[2].name : "No Berry"}
-                    </Text></View>
-                <View style={styles.cell}>
-                    <View style={styles.smsquare} />
-                    <Text style={styles.label}>
-                        {data.berries.length > 3 ? data.berries[3].name : "No Berry"}
-                    </Text></View>
+                {data.berries.map((berry, index) => (
+                    <TouchableOpacity style={styles.cell} key={berry.id}onPress={handleEditBox}>
+                        <View style={styles.berryIcon} />
+                        <Text style={styles.label}>
+                            {data.berries ? data.berries[index].name : "No Berry"}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
             </View>
 
             <View style={styles.binIcon}>
-                <Text onPress={onRemove}>Delete</Text>
+                <Text onPress={handleDelete}>Delete</Text>
             </View>
         </View>
     );
@@ -67,15 +68,17 @@ const styles = StyleSheet.create({
         marginRight: 12
     },
     binIcon: {
-        width: 45,
+        width: 48,
         height: "auto",
         borderColor: "black",
         backgroundColor: "red",
         borderRadius: 10,
         borderWidth: 1,
+        alignItems: "center",
     },
     iconText: {
-        fontSize: 10,
+        fontSize: 18,
+        fontFamily: "Roboto"
     },
     grid: {
         flexDirection: "row",
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
         width: "50%",
         marginBottom: 8
     },
-    smsquare: {
+    berryIcon: {
         width: 20,
         height: 20,
         backgroundColor: "#bbb",

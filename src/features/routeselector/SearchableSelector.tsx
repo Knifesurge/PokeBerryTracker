@@ -19,10 +19,21 @@ type Props = {
 const SearchableSelector = ({ options, onSelect, label}: Props) => {
     const [visible, setVisible] = useState(false);
     const [query, setQuery] = useState("");
+    const [selected, setSelected] = useState(label || "");
+
+
+    console.log(`Label: ${label}`)
+
 
     const filtered = options.filter(opt => opt.toLowerCase().includes(query.toLowerCase()));
 
     const toggleVisible = () => setVisible(!visible);
+
+    const handleSelect = (value: string) => {
+        setSelected(value);
+        setQuery("");
+        onSelect?.(value);
+    }
 
     return (
             <View>
@@ -48,7 +59,7 @@ const SearchableSelector = ({ options, onSelect, label}: Props) => {
                                     <TouchableOpacity
                                         style={styles.option}
                                         onPress={() => {
-                                            onSelect(item);
+                                            handleSelect(item);
                                             setVisible(false);
                                         }}
                                     >

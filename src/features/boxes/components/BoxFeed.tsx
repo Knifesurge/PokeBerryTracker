@@ -1,27 +1,30 @@
 import React from 'react';
 
 import { FlatList, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 
+import { useRouter } from 'expo-router';
 import { RootState } from '../store/pokeStore';
-import RouteBox from './BoxComponent';
+import BoxComponent from './BoxComponent';
 
 const BoxFeed = () => {
-    const routeBoxes = useSelector((state: RootState) => state.boxes.items);
+    const router = useRouter();
+    const boxes = useSelector((state: RootState) => state.boxes.items);
+
+    const handleEdit = (boxId: string) => {
+        router.push(`/(boxes)/editbox/${boxId}`);
+    };
 
     return (
-        <SafeAreaView style={styles.safeArea}>
             <View>
                 <FlatList
                     style={styles.list}
                     contentContainerStyle={styles.listContent}
-                    data={routeBoxes}
+                    data={boxes}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <RouteBox data={item} />}
+                    renderItem={({ item }) => <BoxComponent data={item} onEdit={() => handleEdit(item.id)}/>}
                 />
             </View>
-        </SafeAreaView>
     );
 };
 
@@ -33,9 +36,11 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     list: {
-        flex: 1,
+        marginTop: 20,
+        width: "auto",
+        alignSelf: "center"
     },
     listContent: {
-        paddingBottom: 20,
+        justifyContent: "center"
     },
 });

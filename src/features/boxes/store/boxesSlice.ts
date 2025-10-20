@@ -14,41 +14,33 @@ const boxesSlice = createSlice({
             reducer: (state, action: PayloadAction<Box>) => {
                 state.items.push(action.payload);
             },
-            prepare: (routeName: string, berryName: string) => ({
+            prepare: (routeName: string, berries: string[]) => ({
                 payload: {
                     id: nanoid(),
                     routeName,
-                    berries: berryName ? [{id: nanoid(), name: berryName} as Berry] : [],
+                    berries: berries.map((berry) => ({
+                        id: nanoid(),
+                        name: berry,
+                    }) as Berry),
                 } as Box,
             }),
         },
         removeBox: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter(box => box.id !== action.payload);
         },
-        addBerry: {
-            reducer: (state, action: PayloadAction<{ boxId: string; berry: Berry }>) => {
-                const box = state.items.find((b) => b.id === action.payload.boxId);
-                if (box && box.berries.length < 4) {
-                    box.berries.push(action.payload.berry);
-                }
-            },
-            prepare: (boxId: string, berry: string) => ({
-                payload: {
-                    boxId, berry: {
-                        id: nanoid(),
-                        name: berry,
-                    } as Berry,
-                },
-            }),
-        },
-        removeBerry: (state, action: PayloadAction<{ boxId: string; berryId: string }>) => {
-            const box = state.items.find((b) => b.id === action.payload.boxId);
+        updateBox: (state, action: PayloadAction<{ id:string; routeName?:string, berries: string[] }>) => {
+            const { id, routeName, berries } = action.payload;
+            const box = state.items.find(box => box.id === id);
             if (box) {
-                box.berries = box.berries.filter((b) => b.id !== action.payload.berryId);
+                box.berries = berries.map((berry) => ({
+                    id: nanoid(),
+                    name: berry,
+                }) as Berry);
+                box.routeName = routeName ?? box.routeName;
             }
         },
     },
 });
 
-export const { addBox, removeBox, addBerry, removeBerry } = boxesSlice.actions;
+export const { addBox, removeBox, updateBox } = boxesSlice.actions;
 export default boxesSlice.reducer;

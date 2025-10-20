@@ -1,52 +1,27 @@
+import BoxForm from '@/src/features/boxes/components/BoxForm';
 import { addBox } from '@/src/features/boxes/store/boxesSlice';
-import { berriesList, routesList } from '@/src/features/boxes/store/initialData';
-import SearchableSelector from '@/src/features/routeselector/SearchableSelector';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch } from 'react-redux';
 
 const CreateBoxScreen = () => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const [selectedRoute, setSelectedRoute] = useState<string>("");
-    const [selectedBerry, setSelectedBerry] = useState<string>("");
 
-    const handleRouteSelection = (value: string) => {
-        console.log(`Selected: ${value}`);
-        setSelectedRoute(value);
-    };
-
-    const handleBerrySelection = (value: string) => {
-        console.log(`Selected: ${value}`);
-        setSelectedBerry(value);
-    };
-
-    const handleBoxSubmit = () => {
-        console.log(`Box created: {${selectedRoute}, ${selectedBerry}}`);
-        dispatch(addBox(selectedRoute, selectedBerry));
-        setSelectedRoute("");
-        setSelectedBerry("");
+    const handleBoxSubmit = (data: { route: string; berries: string[] }) => {
+        dispatch(addBox(data.route, data.berries));
         router.back();
     };
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <SearchableSelector
-                    options={routesList}
-                    onSelect={handleRouteSelection}
-                    label={selectedRoute ? `Route: ${selectedRoute}` : "Select Route"}
+                <BoxForm 
+                    onSubmit={(data) => handleBoxSubmit(data)}
+                    submitLabel="Create"
                 />
-                <SearchableSelector
-                    options={berriesList}
-                    onSelect={handleBerrySelection}
-                    label={selectedBerry ? `Berry: ${selectedBerry}` : "Select Berry"}
-                />
-                <TouchableOpacity activeOpacity={0.8} onPress={handleBoxSubmit}>
-                    <Text style={styles.routeButton}>Create Box</Text>
-                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
