@@ -2,6 +2,8 @@ import { Box } from '@/src/features/boxes/store/types';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { removeBox } from '../store/boxesSlice';
 
 type Props = {
     data: Box;
@@ -10,14 +12,14 @@ type Props = {
 
 const BoxComponent = ({data, onEdit}: Props) => {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleEditBox = () => {
         router.push(`/(boxes)/editbox/${data.id}`);
     };
 
     const handleDelete = () => {
-        // Implement delete functionality here
-        
+        dispatch(removeBox(data.id));
     }
 
     return (
@@ -29,11 +31,11 @@ const BoxComponent = ({data, onEdit}: Props) => {
             <View style={styles.grid}>
                 {data.berries.map((berry, index) => (
                     <TouchableOpacity style={styles.cell} key={berry.id}onPress={handleEditBox}>
-                    <View style={styles.berryIcon} />
-                    <Text style={styles.label}>
-                        {data.berries ? data.berries[index].name : "No Berry"}
-                    </Text>
-                </TouchableOpacity>
+                        <View style={styles.berryIcon} />
+                        <Text style={styles.label}>
+                            {data.berries ? data.berries[index].name : "No Berry"}
+                        </Text>
+                    </TouchableOpacity>
                 ))}
             </View>
 

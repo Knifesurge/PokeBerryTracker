@@ -15,19 +15,17 @@ const BoxForm = ({
     initialRoute = "",
     initialBerries = [],
     onSubmit,
-    submitLabel = "Save"
+    submitLabel = "Create"
 }: Props) => {
     const router = useRouter();
     const [selectedRoute, setSelectedRoute] = useState<string>(initialRoute || "");
     const [berrySelections, setBerrySelections] = useState<string[]>(initialBerries.length ? initialBerries.slice(0,4) : ["","","",""]);
     
     const handleRouteSelection = (value: string) => {
-        console.log(`Selected: ${value}`);
         setSelectedRoute(value);
     };
 
     const handleBerrySelection = (value: string, index: number) => {
-        console.log(`Selected: ${value} in slot ${index}`);
         const newList = [...berrySelections];
         newList[index] = value;
         setBerrySelections(newList);

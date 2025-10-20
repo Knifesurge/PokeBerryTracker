@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-
 import BoxFeed from '@/src/features/boxes/components/BoxFeed';
 import mockData from '@/src/mockdata/MockData.json';
 import { useRouter } from 'expo-router';

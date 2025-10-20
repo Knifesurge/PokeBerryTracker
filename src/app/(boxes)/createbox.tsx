@@ -11,7 +11,6 @@ const CreateBoxScreen = () => {
     const dispatch = useDispatch();
 
     const handleBoxSubmit = (data: { route: string; berries: string[] }) => {
-        console.log(`Submit data: ${JSON.stringify(data)}`);
         dispatch(addBox(data.route, data.berries));
         router.back();
     };

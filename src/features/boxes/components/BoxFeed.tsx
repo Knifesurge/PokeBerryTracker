@@ -1,14 +1,13 @@
 import React from 'react';
 
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { useRouter } from 'expo-router';
 import { RootState } from '../store/pokeStore';
 import BoxComponent from './BoxComponent';
 
 const BoxFeed = () => {
-    const dispatch = useDispatch();
     const router = useRouter();
     const boxes = useSelector((state: RootState) => state.boxes.items);
 
