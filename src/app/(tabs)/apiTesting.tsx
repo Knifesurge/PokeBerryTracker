@@ -6,9 +6,9 @@ import { StyleSheet, Text, View } from "react-native";
 const ApiTestingScreen = () => {
     const [data, setData] = useState<string>("Select an option above.");
 
-    const handleAllBerries = () => {
+    const handleAllBerries = async () => {
         try {
-            const berries = PokeApi.getAllBerries();
+            const berries = await PokeApi.getAllBerries();
             console.log(JSON.stringify(berries, null, 2));
             setData(JSON.stringify(berries, null, 2));
         } catch (error) {
@@ -17,9 +17,9 @@ const ApiTestingScreen = () => {
         }
     };
 
-    const handleAllRoutes = () => {
+    const handleAllRoutes = async () => {
         try {
-            const routes = PokeApi.getAllRoutes();
+            const routes = await PokeApi.getAllRoutes();
             setData(JSON.stringify(routes, null, 2));
         } catch (error) {
             console.error("Error fetching all routes:", error);
